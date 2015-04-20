@@ -1,0 +1,13 @@
+<?xml version='1.0' standalone='yes'?>
+<codex>
+	<metadata>
+		<name>English</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bc</guid>
+	</metadata>
+	<strings>
+		<!-- Common Strings -->
+		<string id="hello">Hello, World!</string>
+		<string id="goodbye">Goodbye, World...</string>
+	</strings>
+</codex>
