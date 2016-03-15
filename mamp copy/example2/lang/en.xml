@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<codex>
+	<metadata>
+		<name>English</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bc</guid>
+	</metadata>
+
+	<strings>
+		<!-- Common Strings -->
+		<string id="title">Rosetta Demo</string>
+
+		<!-- Menu -->
+		<string id="home">Home</string>
+		<string id="about">About</string>
+		<string id="contact">Contact</string>
+
+		<string id="about1" type="text">Welcome to our fantastic website.</string>
+		<string id="about2" type="text">We are a great company that does many great things.</string>
+
+		<string id="name">Name</string>
+		<string id="email">Email</string>
+		<string id="subject">Subject</string>
+		<string id="message">Message</string>
+		<string id="submit">Submit</string>
+	</strings>
+</codex>

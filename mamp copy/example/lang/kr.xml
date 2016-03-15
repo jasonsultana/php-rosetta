@@ -1,0 +1,68 @@
+<?xml version='1.0' standalone='yes'?>
+<codex>
+	<metadata>
+		<name>한국어</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bc</guid>
+	</metadata>
+
+	<strings>
+		<!-- Common Strings -->
+		<string id="metadesc"> Yoko랑 Jason이랑 함께 일본어랑 영어 한국어를 배웁시다 - 세상에서 제일 재미있고 다정한 선생！</string>
+		
+		<string id="title">YJLessons.com -  Yoko랑Jason이랑 함께하는 레슨!</string>
+		<string id="subtitle">스카이프를 통해서 말을 배우자!</string>
+
+		<string id="english">영어</string>
+		<string id="japanese">일본어</string>
+		<string id="korean">한국어</string>
+
+		<!-- Menu -->
+		<string id="home">홈</string>
+		<string id="prices">요금안내</string>
+		<string id="freebies">무료제공</string>
+		<string id="contact">레슨요청</string>
+
+		<!-- Home Page -->
+		<string id="imyoko">안녕하세요.Yoko입니다!</string>
+		<string id="imakoreanteacher">한국어랑 일본어를 가르쳐 드립니다!</string>
+		<string id="imjason">안녕하세요.Jason입니다!</string>
+		<string id="imanenglishteacher">영어를 가르쳐 드립니다!</string>
+		<string id="schedulealesson">레슨요청은 여기를 클릭하십시오.</string>
+
+		<!-- Contact Page -->
+		<string id="contact_title">연락해주세요!</string>
+		<string id="whatsurname">이름을 입력해주세요</string>
+		<string id="whatsuremail">이메일 주소를 입력해주세요</string>
+		<string id="whatsurskype">스카이프ID를 입력해주세요</string>
+		<string id="whatsurnativelang">가장 유창하게 할수 있는 언어는 무엇입니까?</string>
+		<string id="yourbenkyoushitailang">무슨 언어를 배우고 싶습니까?</string>
+		<string id="yourbenkyoulevel">배우고 싶은 언어를 어느정도 할수 있습니까?</string>
+
+		<string id="notatall">전혀 못합니다 - 완전한 초심자입니다</string>
+		<string id="alittle">조금 할수 있습니다 - 단어랑 성구를 조금만 알고 있습니다</string>
+		<string id="somewhat">다소 할수 있습니다- 간단한 질문을 하거나 대답을 할수 있습니다</string>
+		<string id="okay">문제없이 할수 있습니다 - 일상 대화 정도이면 할수 있습니다</string>
+		<string id="prettywell"> 제법 할수 있습니다- 어떤 상황에서도 거의 불편없이 할수 있습니다</string>
+
+		<string id='contactMessage'>요구시항이 있으면 적어주세요</string>
+		
+		<string id="send">송신</string>
+
+		<string id="sendSuccess">메시지를 수신했습니다.감사합니다！첫회 레슨날짜에 관해서 나중에 연락드립니다.</string>
+		<string id="sendFail">메시지를 처리​​하는 중에 문제가 발생했습니다. 나중에 다시 시도하거나 admin@yjlessons.com 를 통해 직접 문의하시기 바랍니다. 감사합니다!</string>
+
+		<!-- Prices Page -->
+	 	<string id="ourPrices">레슨가격</string>
+	  	<string id="1lesson">1 레슨</string>
+	  	<string id="1lessonPrice">15000원(15000원/1레슨)</string>
+
+	  	<string id="3lesson">3 레슨</string>
+	  	<string id="3lessonPrice">40000원(13333원/1레슨)</string>
+
+	  	<string id="10lesson">10 레슨</string>
+	  	<string id="10lessonPrice">100000원 (10000원/1레슨)</string>
+
+		<string id="lessonDuration">레슨은 스카이프를 통해서 1시간입니다. 이 외에 요구사항이 있으시면 상담해 주세요.</string>
+	</strings>
+</codex>

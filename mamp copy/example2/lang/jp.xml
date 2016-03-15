@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<codex>
+	<metadata>
+		<name>&#x65E5;&#x672C;&#x8A9E;</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bd</guid>
+	</metadata>
+
+	<strings>
+		<!-- Common Strings -->	
+		<string id="title">&#x30ED;&#x30BC;&#x30C3;&#x30BF;&#x30C7;&#x30E2;&#x30F3;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;</string>
+
+		<!-- Menu -->
+		<string id="home">&#x30DB;&#x30FC;&#x30E0;</string>
+		<string id="about">&#x308F;&#x308C;&#x308F;&#x308C;&#x306B;&#x3064;&#x3044;&#x3066;</string>
+		<string id="contact">&#x30B3;&#x30F3;&#x30BF;&#x30AF;&#x30C8;</string>
+
+		<string id="about1" type="text">&#x3053;&#x3093;&#x306B;&#x3061;&#x306F;&#x3002;&#x79C1;&#x305F;&#x3061;&#x306E;&#x3059;&#x3070;&#x3089;&#x3057;&#x3044;&#x30DB;&#x30FC;&#x30E0;&#x30DA;&#x30B8;&#x3078;&#x3088;&#x3046;&#x3053;&#x305D;&#x3002;</string>
+		<string id="about2" type="text">&#x79C1;&#x305F;&#x3061;&#x306F;&#x3068;&#x3066;&#x3082;&#x3044;&#x3044;&#x3082;&#x306E;&#x3092;&#x3057;&#x3066;&#x308B;&#x3068;&#x3066;&#x3082;&#x3044;&#x3044;&#x4F1A;&#x793E;&#x3002;</string>
+
+		<string id="name">&#x540D;&#x524D;</string>
+		<string id="email">&#x30E1;&#x30FC;&#x30EB;&#x30A2;&#x30C9;&#x30EC;&#x30B9;</string>
+		<string id="subject">&#x30B5;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;</string>
+		<string id="message">&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;</string>
+		<string id="submit">&#x51FA;&#x3059;</string>
+	</strings>
+</codex>

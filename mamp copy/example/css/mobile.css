@@ -1,0 +1,72 @@
+body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+
+a.navbar-brand {
+	padding-left: 10px !important;
+	padding-top: 9px !important;
+}
+
+ul#social li a {
+	float: left;
+	margin-left: 10px;
+	padding: 2px;
+}
+
+.theme-dropdown .dropdown-menu {
+	position: static;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+	margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+	width: auto;
+}
+
+/* CUSTOM (using important to override bootstrap defaults) */
+.navbar-header {
+	background: #C4E9E8 url(../images/back.png) repeat-x !important;
+}
+
+a.navbar-brand, h1 {
+	color: #E5017D !important;
+}
+
+button.navbar-toggle, .navbar-nav .active a {
+	background-color:  #E5017D !important;
+	background-image: none !important;
+}
+
+.navbar-nav li a {
+	color: black !important;
+}
+
+div#navbar {
+	background-color: #C9E5E9 !important;
+}
+
+.mobileCleaner {
+	clear: both;
+}
+
+#jason img {
+	float: right;
+}
+
+.center-text {
+	text-align: center;
+}
+
+div.inner-center, form div {
+  width: 50%;
+  margin: 0 auto;
+}
+
+input.contact, select.contact, textarea.contact {
+  width: 100%;
+}
