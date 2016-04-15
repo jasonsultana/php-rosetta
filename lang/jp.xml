@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="yes"?>
+<codex>
+	<metadata>
+		<name>Japanese</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bd</guid>
+	</metadata>
+
+	<strings>
+		<!-- Common Strings -->
+		<string id="title" type = "text">こんにちは</string>
+		
+		<!-- Menu -->
+		<string id="home">ホーム</string>
+		<string id="about">私たちについて</string>
+		<string id="login">ログイン</string>
+		
+		<!-- Page -->
+		<string id="greeting">こんにちはー</string>
+		<string id="example1">このホームページはサンプルです。</string>
+		<string id="example2">このページはロゼッタを使い方を見せます。</string>
+		
+		<!-- Login -->
+		<string id="username">ユーザネーム</string>
+		<string id="password">パースワード</string>
+		<string id="success">あたりました. ようこそう, [name]. 今は[time]です。</string>
+		<string id="nosuccess">はずれました</string>
+		<string id="submit">次へ</string>
+	</strings>
+</codex>

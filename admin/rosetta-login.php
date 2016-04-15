@@ -1,24 +1,34 @@
 <?php
+    error_reporting(E_ALL);
     session_start();
+
     $configUrl = dirname(__FILE__) . '/rosetta-config.php';
     $loginError = false;
     $loginErrorMessage = "";
     
+    if(isset($_GET['logout'])) {
+        session_destroy();
+        $_SESSION['isLoggedIn'] = "false";
+    }
+
     if(!file_exists($configUrl)) {
         //There is no config file. Move to the setup wizard.
         header("location: rosetta-setup.php");
+        exit;
     }
-    else if(array_key_exists('isLoggedIn', $_SESSION)) {
-        if($_SESSION['isLoggedIn'] == true) {
+    else {
+        require_once $configUrl;
+    }
+
+    if(array_key_exists('isLoggedIn', $_SESSION)) {
+        if($_SESSION['isLoggedIn'] === "true") {
             //already logged in. Move to the site root.   
-            require_once $configUrl;
             header("location: " . ROSETTA_SITE_ROOT);
+            exit;
         }
     }
     
     if(isset($_POST['wp-submit'])) {
-        require_once $configUrl;
-        
         if(ROSETTA_USERNAME != $_POST['user_login']) {
             $loginError = true;
             $loginErrorMessage = "Incorrect Username";
@@ -28,8 +38,13 @@
             $loginErrorMessage = "Correct Username. Incorrect Password";
         }
         else {
-            $_SESSION['isLoggedIn'] = true;
+            $_SESSION['isLoggedIn'] = "true";
+            $_SESSION['adminPath'] = dirname(__FILE__);
+            $_SESSION['adminUrl'] = dirname($_SERVER['PHP_SELF']);
+
+            //echo "Redirecting to site root after login: " . ROSETTA_SITE_ROOT;
             header("location: " . ROSETTA_SITE_ROOT);
+            exit;
         }
     }
 ?>
@@ -48,7 +63,7 @@
         <link rel='stylesheet' id='open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.4.2' type='text/css' media='all' />
         <link rel='stylesheet' id='dashicons-css'  href='dashicons.min.css' type='text/css' media='all' />
         <link rel='stylesheet' id='login-css'  href='login.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' href='custom.css' type = 'text/css'/>
+        <link rel='stylesheet' href='rosetta-custom.css' type = 'text/css'/>
 
         <meta name='robots' content='noindex,follow' />
 	</head>
@@ -88,19 +103,20 @@
             
             <script type="text/javascript">
             function wp_attempt_focus(){
-            setTimeout( function(){ try{
-            d = document.getElementById('user_login');
-            d.focus();
-            d.select();
-            } catch(e){}
-            }, 200);
+                setTimeout(function(){ 
+                    try{
+                        d = document.getElementById('user_login');
+                        d.focus();
+                        d.select();
+                    } catch(e){}
+                }, 200);
             }
             
             wp_attempt_focus();
             if(typeof wpOnload=='function')wpOnload();
             </script>
             
-	        <p id="backtoblog"><a href="" title="Are you lost?">&larr; Back to your website</a></p>
+	        <p id="backtoblog"><a href="<?php echo ROSETTA_SITE_ROOT; ?>" title="Are you lost?">&larr; Back to your website</a></p>
 	    </div>
 	    <div class="clear"></div>
 	</body>

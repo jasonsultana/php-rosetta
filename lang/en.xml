@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="yes"?>
+<codex>
+	<metadata>
+		<name>English</name>
+		<encoding>UTF-8</encoding>
+		<guid>8a1c6837-e38b-4f56-af08-a9f324ed43bc</guid>
+	</metadata>
+
+	<strings>
+		<!-- Common Strings -->
+		<string id="title">Welcome!</string>
+		
+		<!-- Menu -->
+		<string id="home">Home</string>
+		<string id="about">About Us</string>
+		<string id="login">Login</string>
+		
+		<!-- Page -->
+		<string id="greeting" type="text">Hello user!</string>
+		<string id="example1">This is an example site.</string>
+		<string id="example2">This will show you how to use rosetta.</string>
+		
+		<!-- Login -->
+		<string id="username">Username</string>
+		<string id="password">Password</string>
+		<string id="success" type="hidden">Success. Welcome, [name]. The time is [time].</string>
+		<string id="nosuccess">Failed</string>
+		<string id="submit">Save and return</string>
+	</strings>
+</codex>

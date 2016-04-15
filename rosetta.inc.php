@@ -1,21 +1,11 @@
 <?php
 	/* 
-		Rosetta Localisation Framework v1.2.
+		Rosetta Translation Framework v2 (with GUI)
 		Original developer: Jake Taylor
 		Other contributor(s): Jason Sultana.
 
 		Rosetta provides methods of loading dynamic text (for translation, usually) by loading values from an XML dictionary. It does not concern itself with the storage and loading of 
-		XML though. You are free to store the XML in a database, raw file or any other means. Load the XML as a string externally and pass it to Rosetta via:
-
-		//Load some xml into a string...
-	
-		//...
-
-		$rosetta = new rosetta(rosetta::makeLanguage($str)); //we need one language at least
-
-		//If desired, add new languages via:
-			$lang = rosetta::makeLanguage($xml);
-			$rosetta->addLanguage($lang);
+		XML though. You are free to store the XML in a database, raw file or any other means.
 	*/
 
 	//! Rosetta dynamic text and translation library for PHP
@@ -24,12 +14,25 @@
 		private $languages = array();
 		private $currentLang = null;
 
+		const LOAD_STRING = 0;
+		const LOAD_URL = 1;
+		
 		/**
-			Rosetta constructor. Adds the supplied language to the instance and sets it as the current language.
-			@param language language An instantiated language object. Use rosetta::makeLanguage to generate this.
+			Initialize the constructor given a string and a method.
+			@str String Either the filepath to an XML doc or an XML string literal.
+			@method Int One of rosetta::LOAD_STRING or rosetta::LOAD_URL which specifies what @str is.
 		*/
-		public function __construct(language $language)
+		public function __construct($str, $method=rosetta::LOAD_STRING)
 		{
+			if($method == rosetta::LOAD_URL) {
+				$file = fopen($str, 'r');
+				$text = fread($file, filesize($str));
+				fclose($file);
+				
+				$str = $text;
+			}
+			
+			$language = rosetta::makeLanguage($str);
 			$this->addLanguage($language);
 			$this->currentLang =& $language;
 		}
@@ -98,6 +101,110 @@
 			return $rtn;
 		}
 
+		public function isAdminLoggedIn() 
+		{
+		    if(array_key_exists('isLoggedIn', $_SESSION)) {
+		        return $_SESSION['isLoggedIn'] === "true";
+		    }
+
+		    return false;
+		}
+		/**
+			Should be called in the HTML head of compliant pages. Pages must use jQuery.
+		*/
+		public function getHeader() 
+		{
+			if(array_key_exists('isLoggedIn', $_SESSION)) {
+			    if($_SESSION['isLoggedIn'] == "true") {
+?>
+					<link href = "<?php echo $_SESSION['adminUrl']; ?>/rosetta-custom.css" rel = "stylesheet"/>
+					<link href = "<?php echo $_SESSION['adminUrl']; ?>/bootstrap/dist/css/bootstrap.min.css" rel = "stylesheet"/>
+
+
+					<script>
+						window.onload = function() {
+							$.get("<?php echo $_SESSION['adminUrl']; ?>/rosetta-nav.php", function(e){
+								$("body").append(e); //add a nav to the body at the top 
+
+								window.mode = 'view';
+
+								$("#mode-toggle").click(function() {
+									if(window.mode == 'view') {
+										$("#mode-toggle").html("Enable view Mode");
+
+										$('.edit').editable(function(value, settings) {
+											var eleId = $(this).attr("id");
+											
+											var count = 0;
+											
+											var ele = this;
+											var t = setInterval(function() {
+												if(count > 3)
+													count = 1;
+												else
+													count++;
+
+												var text = "";
+												for(var i = 0; i < count; i++)
+													text += ".";
+
+												$(ele).html(text);
+											}, 500);
+
+											$.post("<?php echo $_SESSION['adminUrl']; ?>/rosetta-edit-api.php", {
+												id: eleId,
+												val: value,
+												dict: $("#rosetta-dict").val()
+											}, function(e) {
+												clearInterval(t);
+
+												if(e == "OK") {
+													$(this).html(value);
+												}
+												else {
+													alert(e);
+												}
+											});
+
+										    //console.log(this);
+										    //console.log(value);
+										    //console.log(settings);
+										    return(value);
+										}, {
+										     type    : 'text',
+										     submit  : 'OK',
+										});
+
+										window.mode = 'edit';
+									}
+									else if(window.mode == 'edit') {
+										$("#mode-toggle").html("Enable edit Mode");
+										$('.edit').unbind('click');
+
+
+										window.mode = "view";
+									}
+								});
+							});
+						};
+					</script>
+<?php
+				}
+			}
+		}
+
+		public function getFooter() 
+		{
+			if(array_key_exists('isLoggedIn', $_SESSION)) {
+			    if($_SESSION['isLoggedIn'] == "true") {
+?>
+					<script src = "<?php echo $_SESSION['adminUrl']; ?>/jquery.jeditable.js"></script>
+					<input id = "rosetta-dict" type = "hidden" value = "<?php echo $this->currentLang->getGuid(); ?>"/>
+<?php
+				}
+			}
+		}
+
 		/**
 			Sets the current language being used by the rosetta instance, identified by the GUID used in each XML dictionary.
 		*/
@@ -115,9 +222,9 @@
 		/**
 			Returns a value from the current dictionary, given it's key (it's id).
 		*/
-		public function getString($id)
+		public function getString($id, $args = array())
 		{
-			return $this->currentLang->getString($id);
+			return $this->currentLang->getString($id, $args);
 		}
 
 		public function getAllStrings()
@@ -149,7 +256,7 @@
 		private $guid;
 		private $codex;
 		private $volume;
-		private $strings;
+		private $strings; //these are of type node
 
 		public function __construct(codex $codex, $volume = false)
 		{
@@ -210,19 +317,45 @@
 			return $this->guid;
 		}
 
-		public function getString($id)
+		public function getString($id, $args = array())
 		{
-			if(array_key_exists($id, $this->strings))
-				return $this->strings[$id];
-			else
-				return false; 
-			
+			if(array_key_exists($id, $this->strings)) {
+				$tmp = $this->strings[$id]->string;
+				
+				//replace the [key] instances in the XML string with their supplied values
+				$argKeys = array_keys($args);
+				foreach($argKeys as $key) {
+					$tmp = str_replace("[" . $key . "]", $args[$key], $tmp);
+				}
+
+				//make the text field editable for admins
+				if (session_status() == PHP_SESSION_ACTIVE) {
+					if(array_key_exists('isLoggedIn', $_SESSION)) {
+					    if($_SESSION['isLoggedIn'] == "true") {
+					    	if($this->strings[$id]->type == "text") {
+					    		return "<span id = '$id' class = 'edit'>" . $tmp . "</span>";
+					    	}
+					    }
+					}
+				}
+
+				return $tmp;
+			}
+			else {
+				return false; 				
+			}
 		}
 
 		public function getAllStrings()
 		{
 			return $this->strings;
 		}
+	}
+
+	class node 
+	{
+		public $string;
+		public $type;
 	}
 
 	class codex extends SimpleXMLIterator
@@ -260,7 +393,11 @@
 			{
 				if($child->getName() == "string")
 				{
-					$array[(string) $child['id']] = (string) $child;
+					$tmp = new node();
+					$tmp->string = (string) $child;
+					$tmp->type = (string) $child['type'];
+
+					$array[(string) $child['id']] = $tmp;
 				}
 				elseif($child->getName() == "volume" && ($volume == false || $volume == (string) $child['id']))
 				{
@@ -268,7 +405,11 @@
 					{
 						if($grandchild->getName() == "string")
 						{
-							$array[(string) $grandchild['id']] = (string) $grandchild;
+							$tmp = new node();
+							$tmp->string = (string) $grandchild;
+							$tmp->type = (string) $grandchild['type'];
+
+							$array[(string) $grandchild['id']] = $tmp;
 						}
 					}
 				}

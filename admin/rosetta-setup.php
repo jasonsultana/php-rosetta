@@ -1,13 +1,41 @@
 <?php    
+	//http://stackoverflow.com/questions/15983782/replacing-single-backslashes-with-double-backslashes-in-php
+	function doubleSlashes($input) {
+		//Need to use \\ so it ends up being \
+		$fileArray = explode("\\", $input);
+
+		//take the first one off the array
+		$file = array_shift($fileArray);
+
+		//go thru the rest of the array and add \\\\ then the next folder
+		foreach($fileArray as $folder){
+			$file .= "\\\\" . $folder;
+		}
+
+		return $file;
+	}
+	
+    session_start();
+
     $configUrl = dirname(__FILE__) . '/rosetta-config.php';
 
-    if(file_exists($configUrl)) {
-        //redirect to the site root
-        require_once $configUrl;
-        header("location: " . ROSETTA_SITE_ROOT);
+    if(array_key_exists('isLoggedIn', $_SESSION)) {
+        if($_SESSION['isLoggedIn'] == "true") {
+            if(isset($_GET['reset'])) {
+                if(file_exists($configUrl))
+                    unlink($configUrl);
+            }
+        }
     }
-    
+
+    if(file_exists($configUrl)) {
+        //redirect to the login page
+        header("location: rosetta-login.php");
+    }
+	
     if(isset($_POST['submit'])) {
+		$_POST['dictpath'] = doubleSlashes($_POST['dictpath']);
+	
         $f = fopen('rosetta-config.php', 'w');
         fwrite($f, "<?php
                     define('ROSETTA_USERNAME', '{$_POST['uname']}');
@@ -36,7 +64,7 @@
         <link rel='stylesheet' id='open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.4.2' type='text/css' media='all' />
         <link rel='stylesheet' id='dashicons-css'  href='dashicons.min.css' type='text/css' media='all' />
         <link rel='stylesheet' id='login-css'  href='login.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' href='custom.css' type = 'text/css'/>
+        <link rel='stylesheet' href='rosetta-custom.css' type = 'text/css'/>
 
         <meta name='robots' content='noindex,follow' />
 	</head>
